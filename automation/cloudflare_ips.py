@@ -1,0 +1,30 @@
+from datetime import datetime
+import requests
+
+cloudflareIpURLv4 = "https://www.cloudflare.com/ips-v4"
+cloudflareIpURLv6 = "https://www.cloudflare.com/ips-v6"
+today = datetime.utcnow().strftime("%c UTC")
+
+
+def generate_rsc(url, outputFile):
+    file_data = requests.get(url).content
+
+    writer = open(outputFile, "w")
+    writer.write("# Generated on " + today)
+
+    if "v6" in url.lower():
+        writer.write("\n/ipv6 firewall address-list")
+    else:
+        writer.write("\n/ip firewall address-list")
+
+    for line in file_data.splitlines():
+        ip = str(line.decode("utf-8"))
+        print("Adding IP: " + ip)
+        writer.write("\nadd list=cloudflare-ips address=" + ip)
+
+    writer.close()
+
+
+print(today)
+generate_rsc(cloudflareIpURLv4, "../cloudflare-ips-v4.rsc")
+generate_rsc(cloudflareIpURLv6, "../cloudflare-ips-v6.rsc")
