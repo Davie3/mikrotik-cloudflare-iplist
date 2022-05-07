@@ -15,4 +15,4 @@
 # Initialize the scheduler with the scripts
 /system scheduler
 add interval=1d name="d3-cf-dl" start-date=Jan/01/2000 start-time=00:05:00 on-event=d3-cloudflare-download
-add interval=1d name="de-cf-rp" start-date=Jan/01/2000 start-time=00:10:00 on-event=d3-cloudflare-replace
+add interval=1d name="d3-cf-rp" start-date=Jan/01/2000 start-time=00:10:00 on-event=d3-cloudflare-replace
