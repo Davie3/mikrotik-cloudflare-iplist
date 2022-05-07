@@ -1,3 +1,4 @@
+# More details at https://github.com/Davie3/mikrotik-cloudflare-iplist
 # Script to download the Cloudflare list
 /system script add name="d3-cloudflare-download" source={
 :log info "Download Cloudflare IP list";
