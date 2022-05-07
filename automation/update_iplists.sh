@@ -1,5 +1,5 @@
 #!/bin/bash
-NOW=$(date +"%m-%d-%Y-%H-%M-%S")
+NOW=$(date +"%m-%d-%Y %H:%M:%S PT")
 
 /usr/bin/git pull
 
