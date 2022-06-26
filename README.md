@@ -17,7 +17,7 @@ Cloudflare does not change these IPs often but my automation will run frequently
 - Run `/import file-name=install.rsc` and/or `/import file-name=install-v6.rsc` from the Mikrotik terminal
 - `d3-cloudflare-download` and `d3-cloudflare-replace` will now be added to your Scripts
 - `d3-cf-dl` and `d3-cf-rp` will be added to the Scheduler
-- By default, the download script will run everyday at 05:00 and the replace script at 10:00. Adjust the frequency and time as needed
+- By default, the download script will run everyday at 00:05:00 and the replace script at 00:10:00. Adjust the frequency and time as needed
 
 ## Manual Way
 - Manually create the download script
