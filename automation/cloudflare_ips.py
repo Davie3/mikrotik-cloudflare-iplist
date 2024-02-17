@@ -28,6 +28,11 @@ def generate_rsc(url, outputFile):
     writer.close()
 
 
-print(today)
-generate_rsc(cloudflareIpURLv4, "../cloudflare-ips-v4.rsc")
-generate_rsc(cloudflareIpURLv6, "../cloudflare-ips-v6.rsc")
+def main():
+    print(today)
+    generate_rsc(cloudflareIpURLv4, "../cloudflare-ips-v4.rsc")
+    generate_rsc(cloudflareIpURLv6, "../cloudflare-ips-v6.rsc")
+
+
+if __name__ == "__main__":
+    main()
