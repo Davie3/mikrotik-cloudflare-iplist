@@ -2,8 +2,8 @@ name: update_iplists
 
 on:
   schedule:
-    - cron: "0 08 * * *" # 8:00 AM Sunday, Coordinated Universal Time (UTC) / 12:00 AM Sunday, Pacific Time (PT)
-    - cron: "0 20 * * *" # 8:00 PM Sunday, Coordinated Universal Time (UTC) / 12:00 PM Sunday, Pacific Time (PT)
+    - cron: "0 08 * * *" # 8:00 AM Coordinated Universal Time (UTC) / 12:00 AM Pacific Time (PT)
+    - cron: "0 20 * * *" # 8:00 PM Coordinated Universal Time (UTC) / 12:00 PM Pacific Time (PT)
 
 jobs:
   build:
