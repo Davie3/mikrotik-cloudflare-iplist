@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "07:00"
+      timezone: "America/Los_Angeles"
+    assignees:
+      - "davie3"
+    reviewers:
+      - "davie3"
+    labels:
+      - "actions"
