@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import datetime, UTC
 import requests
 
 cloudflareIpURLv4 = "https://www.cloudflare.com/ips-v4"
 cloudflareIpURLv6 = "https://www.cloudflare.com/ips-v6"
-today = datetime.utcnow().strftime("%c UTC")
+today = datetime.now(UTC).strftime("%c") + " UTC"
 
 
 def generate_rsc(url, outputFile):
@@ -30,8 +30,8 @@ def generate_rsc(url, outputFile):
 
 def main():
     print(today)
-    generate_rsc(cloudflareIpURLv4, "../cloudflare-ips-v4.rsc")
-    generate_rsc(cloudflareIpURLv6, "../cloudflare-ips-v6.rsc")
+    generate_rsc(cloudflareIpURLv4, "cloudflare-ips-v4.rsc")
+    generate_rsc(cloudflareIpURLv6, "cloudflare-ips-v6.rsc")
 
 
 if __name__ == "__main__":
