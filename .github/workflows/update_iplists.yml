@@ -2,7 +2,7 @@ name: update_iplists
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 8 * * *" # 8:00 AM Sunday, Coordinated Universal Time (UTC) / 12:00 AM Sunday, Pacific Time (PT)
 
 jobs:
   build:
@@ -32,8 +32,8 @@ jobs:
           NOW=$(date +"%m-%d-%Y %H:%M:%S PT")
 
           if ! grep -q "error" "cloudflare-ips-v4.rsc" && ! grep -q "error" "cloudflare-ips-v6.rsc"; then
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
+            git config --local user.email "noreply@github.actions.bot"
+            git config --local user.name "GitHub Actions"
             git add cloudflare-ips-v*
             git status
             git commit -m "Run automations and generate fresh lists - $NOW"
