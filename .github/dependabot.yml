@@ -9,3 +9,17 @@ updates:
       timezone: "America/Los_Angeles"
     labels:
       - "actions"
+    cooldown:
+      default-days: 7
+
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "saturday"
+      time: "07:00"
+      timezone: "America/Los_Angeles"
+    labels:
+      - "dependencies"
+    cooldown:
+      default-days: 7
