@@ -2,7 +2,7 @@
 # Script to download the Cloudflare list
 /system script add name="d3-cloudflare-download" source={
 :log info "Download Cloudflare IP list";
-/tool fetch url="https://raw.githubusercontent.com/Davie3/mikrotik-cloudflare-iplist/main/cloudflare-ips-v4.rsc" mode=https dst-path=cloudflare-ips-v4.rsc;
+/tool fetch url="https://raw.githubusercontent.com/Davie3/mikrotik-cloudflare-iplist/main/cloudflare-ips-v4.rsc" mode=https check-certificate=yes-without-crl dst-path=cloudflare-ips-v4.rsc;
 }
 
 # Script to replace the Cloudflare list

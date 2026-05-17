@@ -2,22 +2,33 @@ name: update_iplists
 
 on:
   schedule:
-    - cron: "0 08 * * *" # 8:00 AM Coordinated Universal Time (UTC) / 12:00 AM Pacific Time (PT)
-    - cron: "0 20 * * *" # 8:00 PM Coordinated Universal Time (UTC) / 12:00 PM Pacific Time (PT)
+    - cron: "0 08 * * *" # 8:00 AM Coordinated Universal Time (UTC) / 12:00 AM Pacific Time (PT)
+    - cron: "0 20 * * *" # 8:00 PM Coordinated Universal Time (UTC) / 12:00 PM Pacific Time (PT)
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: update_iplists-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Clone Project
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
         with:
           python-version: "3.12"
+          cache: pip
 
       - name: Install Python Packages
         run: |
@@ -27,21 +38,29 @@ jobs:
       - name: Execute update_iplists.py Script
         run: python cloudflare_ips.py
 
+      - name: Validate Generated Lists
+        run: |
+          set -euo pipefail
+          for f in cloudflare-ips-v4.rsc cloudflare-ips-v6.rsc; do
+            test -s "$f" || { echo "::error::$f is missing or empty"; exit 1; }
+            head -n1 "$f" | grep -q "^# Generated on " || { echo "::error::$f missing header"; exit 1; }
+            grep -qE "^add list=cloudflare-ips(-v6)? address=" "$f" || { echo "::error::$f has no address-list entries"; exit 1; }
+          done
+
       - name: Commit .rsc Files
         run: |
-          #!/bin/bash
+          set -euo pipefail
           NOW=$(date +"%m-%d-%Y %H:%M:%S PT")
-
-          if ! grep -q "error" "cloudflare-ips-v4.rsc" && ! grep -q "error" "cloudflare-ips-v6.rsc"; then
-            git config --local user.email "noreply@github.actions.bot"
-            git config --local user.name "GitHub Actions"
-            git add cloudflare-ips-v*
-            git status
+          git config --local user.email "noreply@github.actions.bot"
+          git config --local user.name "GitHub Actions"
+          git add cloudflare-ips-v4.rsc cloudflare-ips-v6.rsc
+          git status
+          if ! git diff --cached --quiet; then
             git commit -m "Run automations and generate fresh lists - $NOW"
           fi
 
       - name: Push Changes
-        uses: ad-m/github-push-action@v1.1.0
+        uses: ad-m/github-push-action@4cc74773234f74829a8c21bc4d69dd4be9cfa599 # v1.1.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
