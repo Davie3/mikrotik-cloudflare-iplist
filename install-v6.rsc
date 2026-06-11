@@ -8,7 +8,7 @@
 # Script to replace the Cloudflare list
 /system script add name="d3-cloudflare-replace-v6" source {
 :log info "Remove current Cloudflare IPs (v6)";
-/ip firewall address-list remove [find where list="cloudflare-ips-v6"];
+/ipv6 firewall address-list remove [find where list="cloudflare-ips-v6"];
 :log info "Import newest Cloudflare IPs (v6)";
 /import file-name=cloudflare-ips-v6.rsc;
 }
